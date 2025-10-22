@@ -64,3 +64,11 @@ Create job
 - Default DB is SQLite (`app.db`). Override with `DATABASE_URL` (e.g. Postgres) in `.env`.
 - The skills extractor uses a lightweight skill list at `data/skills.csv` plus simple NLP.
 - For PDFs/docs, extend the ingest to parse files; current MVP accepts raw `resume_text`.
+
+### APP LOOK
+<br><img width="997" height="859" alt="Screenshot 2025-10-22 202451" src="https://github.com/user-attachments/assets/7d3a696f-652d-44bd-88fe-9bf08e169db3" />
+<br>
+<br><img width="1125" height="727" alt="Screenshot 2025-10-22 202503" src="https://github.com/user-attachments/assets/3250c02e-6f50-413c-b216-c6d78b581237" />
+<br><img width="978" height="553" alt="Screenshot 2025-10-22 203406" src="https://github.com/user-attachments/assets/e66b74b8-3cc9-4f2e-99ae-84166bd6aa70" />
+
+<br>
