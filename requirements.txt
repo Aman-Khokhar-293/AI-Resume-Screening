@@ -1,0 +1,9 @@
+Flask>=3.0.0
+scikit-learn>=1.4.0
+spacy>=3.7.0
+nltk>=3.8.1
+SQLAlchemy>=2.0.0
+pandas>=2.2.0
+python-dotenv>=1.0.0
+Werkzeug>=3.0.0
+pypdf>=4.0.0
