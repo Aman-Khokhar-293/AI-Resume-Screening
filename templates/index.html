@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ResumeMatch AI - Smart Recruitment Matching</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=3" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-content">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="url(#grad)"/>
+          <path d="M10 12h12M10 16h12M10 20h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <defs><linearGradient id="grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+        </svg>
+        <span class="logo-text">ResumeMatch AI</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#match">Match</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <h1 class="hero-title">Find the Perfect Match<br/>Between Talent & Opportunity</h1>
+      <p class="hero-subtitle">AI-powered resume screening and job matching to accelerate your recruitment process</p>
+      <a href="#match" class="cta-button">Start Matching →</a>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Why ResumeMatch AI?</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Precise Matching</h3>
+          <p>Advanced AI algorithms analyze resumes and job descriptions to find the best candidates</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Instant Results</h3>
+          <p>Get match scores in seconds, not hours. Speed up your hiring workflow dramatically</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Data-Driven</h3>
+          <p>Make informed decisions with quantifiable match scores and skill analysis</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="match" class="match-section">
+    <div class="container">
+      <h2 class="section-title">Run a Match</h2>
+      <div class="match-card">
+        <form id="recruiter-form">
+          <div class="form-grid">
+            <div class="form-section">
+              <div class="section-header">
+                <div class="section-icon">💼</div>
+                <h3>Job Position</h3>
+              </div>
+              <div class="form-group">
+                <label>Job Title *</label>
+                <input name="title" placeholder="e.g., Senior Software Engineer" required />
+              </div>
+              <div class="form-group">
+                <label>Job Description *</label>
+                <textarea name="description" rows="6" placeholder="Describe the role, responsibilities, qualifications, and what makes this position unique..." required></textarea>
+              </div>
+              <div class="form-group">
+                <label>Required Skills</label>
+                <input name="required_skills" placeholder="e.g., Python, React, AWS, Docker" />
+                <small>Separate multiple skills with commas</small>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <div class="section-header">
+                <div class="section-icon">📄</div>
+                <h3>Candidate Resumes</h3>
+              </div>
+              <p class="section-description">Upload up to 100 resumes for bulk matching. Name and contact will be auto-extracted from PDFs.</p>
+              <div class="form-group">
+                <label>Upload Resumes (Multiple) *</label>
+                <div class="file-upload-wrapper">
+                  <input id="resume-files" name="resume_files" type="file" accept=".txt,.pdf,application/pdf,text/plain" multiple required />
+                  <label for="resume-files" class="file-upload-label">
+                    <span class="upload-icon">📚</span>
+                    <span class="upload-text">Choose files or drag here</span>
+                    <span class="upload-types">TXT or PDF • Max 100 files</span>
+                    <div class="file-count-badge" id="file-count">0 files</div>
+                  </label>
+                </div>
+              </div>
+              <div class="file-list" id="file-list"></div>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button id="btn-run" type="submit" class="btn-primary">
+              <span id="btn-text">🚀 Rank All Candidates</span>
+            </button>
+            <div class="progress-bar" id="progress-bar" style="display: none;">
+              <div class="progress-fill" id="progress-fill"></div>
+              <span class="progress-text" id="progress-text">Processing...</span>
+            </div>
+          </div>
+        </form>
+
+        <div class="results" id="results" style="display: none;">
+          <div class="ranking-header">
+            <h3>🏆 Candidate Ranking Board</h3>
+            <p class="ranking-subtitle">Candidates ranked by match score for <span id="job-title-ranking">--</span></p>
+            <div class="ranking-stats">
+              <div class="stat">
+                <span class="stat-value" id="total-candidates">0</span>
+                <span class="stat-label">Candidates</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" id="avg-score">0%</span>
+                <span class="stat-label">Avg Score</span>
+              </div>
+              <div class="stat">
+                <span class="stat-value" id="top-score">0%</span>
+                <span class="stat-label">Top Score</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ranking-table">
+            <table id="ranking-table">
+              <thead>
+                <tr>
+                  <th class="rank-col">Rank</th>
+                  <th class="name-col">Candidate Name</th>
+                  <th class="contact-col">Contact</th>
+                  <th class="score-col">Match Score</th>
+                  <th class="skills-col">Skills Match</th>
+                  <th class="action-col">Details</th>
+                </tr>
+              </thead>
+              <tbody id="ranking-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Candidate Details Modal -->
+        <div class="modal" id="candidate-modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 id="modal-candidate-name">--</h3>
+              <button class="modal-close" id="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-section">
+                <h4>📊 Match Score</h4>
+                <div class="modal-score" id="modal-score">--</div>
+              </div>
+              <div class="modal-section">
+                <h4>📧 Contact</h4>
+                <p id="modal-contact">--</p>
+              </div>
+              <div class="modal-section">
+                <h4>✓ Matching Skills <span class="badge" id="modal-match-count">0</span></h4>
+                <div class="skill-tags" id="modal-match-skills"></div>
+              </div>
+              <div class="modal-section">
+                <h4>⚠ Missing Skills <span class="badge" id="modal-missing-count">0</span></h4>
+                <div class="skill-tags" id="modal-missing-skills"></div>
+              </div>
+              <div class="modal-section">
+                <h4>📚 All Candidate Skills <span class="badge" id="modal-all-count">0</span></h4>
+                <div class="skill-tags" id="modal-all-skills"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 ResumeMatch AI. Powered by Flask & Machine Learning.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='app_bulk.js') }}?v=3"></script>
+</body>
+</html>
