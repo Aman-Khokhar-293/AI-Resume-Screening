@@ -95,10 +95,12 @@ def bulk_match():
         
         # Process each resume
         results = []
+        errors = []
         for file in files:
             if not file or file.filename == '':
                 continue
             
+            filename = getattr(file, 'filename', 'unknown')
             try:
                 # Extract text from file
                 filename = file.filename
@@ -106,6 +108,7 @@ def bulk_match():
                 
                 if filename_lower.endswith('.pdf'):
                     if PdfReader is None:
+                        errors.append({"file": filename, "error": "pypdf not installed"})
                         continue
                     pdf_bytes = file.read()
                     reader = PdfReader(io.BytesIO(pdf_bytes))
@@ -116,9 +119,11 @@ def bulk_match():
                 elif filename_lower.endswith('.txt'):
                     resume_text = file.read().decode('utf-8', errors='ignore').strip()
                 else:
+                    errors.append({"file": filename, "error": "Unsupported file type"})
                     continue
                 
                 if not resume_text:
+                    errors.append({"file": filename, "error": "No text extracted"})
                     continue
                 
                 # Extract name and contact
@@ -152,19 +157,24 @@ def bulk_match():
                     })
             
             except Exception as e:
-                # Skip problematic files
-                print(f"Error processing {filename}: {e}")
+                import traceback
+                print(f"Error processing {filename}: {traceback.format_exc()}")
+                errors.append({"file": filename, "error": str(e)})
                 continue
         
         # Sort by score descending
         results.sort(key=lambda x: x["score"], reverse=True)
         
-        return jsonify({
+        response = {
             "job_id": job_id,
             "job_title": title,
             "total_candidates": len(results),
             "candidates": results
-        }), 200
+        }
+        if errors:
+            response["errors"] = errors
+        
+        return jsonify(response), 200
     
     except Exception as e:
         return jsonify({"error": f"Bulk matching failed: {str(e)}"}), 500

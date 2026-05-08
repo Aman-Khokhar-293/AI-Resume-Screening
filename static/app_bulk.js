@@ -80,7 +80,11 @@ window.addEventListener('DOMContentLoaded', () => {
       }
       
       if (!data.candidates || data.candidates.length === 0) {
-        alert('No candidates were successfully processed. Please check the resume files.');
+        let errorMsg = 'No candidates were successfully processed.';
+        if (data.errors && data.errors.length > 0) {
+          errorMsg += '\n\nErrors:\n' + data.errors.map(e => `${e.file}: ${e.error}`).join('\n');
+        }
+        alert(errorMsg);
         progressBar.style.display = 'none';
         return;
       }
