@@ -16,6 +16,9 @@ load_dotenv()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-key")
 
+# Ensure DB tables exist (needed for gunicorn/Render deployment)
+init_db()
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -215,8 +218,6 @@ def api_recommendations():
         return jsonify({"recommendations": results})
 
 if __name__ == "__main__":
-    # Ensure DB tables exist
-    init_db()
     host = os.getenv("APP_HOST", "127.0.0.1")
     port = int(os.getenv("APP_PORT", 5000))
     app.run(host=host, port=port, debug=os.getenv("FLASK_ENV") == "development")
