@@ -9,4 +9,6 @@ Base = declarative_base()
 def init_db():
     # Import models to register them with SQLAlchemy's metadata
     import models  # noqa: F401
+    print(f"[init_db] Creating tables with engine: {engine.url}")
     Base.metadata.create_all(bind=engine)
+    print("[init_db] Tables created successfully")
