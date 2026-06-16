@@ -11,8 +11,8 @@ def get_nlp():
         return spacy.load(SPACY_MODEL)
     except OSError:
         try:
-            import spacy.cli
-            spacy.cli.download(SPACY_MODEL)
+            from spacy.cli import download
+            download(SPACY_MODEL)
             return spacy.load(SPACY_MODEL)
         except Exception as e:
             raise RuntimeError(
