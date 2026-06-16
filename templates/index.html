@@ -3,19 +3,35 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ResumeMatch AI - Smart Recruitment Matching</title>
+  <title>ResumeAnalyzer - Smart Recruitment Matching</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}?v=3" />
 </head>
 <body>
   <nav class="navbar">
     <div class="container nav-content">
       <div class="logo">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <rect width="32" height="32" rx="8" fill="url(#grad)"/>
-          <path d="M10 12h12M10 16h12M10 20h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          <defs><linearGradient id="grad" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.3));">
+          <circle cx="18" cy="18" r="17" stroke="url(#g-ring)" stroke-width="1.5" stroke-dasharray="4 2"/>
+          <rect x="7" y="7" width="22" height="22" rx="6" fill="url(#g-bg)" stroke="url(#g-border)" stroke-width="1.5"/>
+          <path d="M12 12h12M12 16h12M12 20h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="23" cy="21" r="3" fill="#10B981" stroke="white" stroke-width="1.5"/>
+          <path d="M25 23l4 4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="g-bg" x1="7" y1="7" x2="29" y2="29" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#4F46E5"/>
+              <stop offset="1" stop-color="#7C3AED"/>
+            </linearGradient>
+            <linearGradient id="g-border" x1="7" y1="7" x2="29" y2="29" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#818CF8"/>
+              <stop offset="1" stop-color="#C084FC"/>
+            </linearGradient>
+            <linearGradient id="g-ring" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#6366F1" stop-opacity="0.6"/>
+              <stop offset="1" stop-color="#A855F7" stop-opacity="0.6"/>
+            </linearGradient>
+          </defs>
         </svg>
-        <span class="logo-text">ResumeMatch AI</span>
+        <span class="logo-text">ResumeAnalyzer</span>
       </div>
       <div class="nav-links">
         <a href="#features">Features</a>
@@ -34,7 +50,7 @@
 
   <section id="features" class="features">
     <div class="container">
-      <h2 class="section-title">Why ResumeMatch AI?</h2>
+      <h2 class="section-title">Why ResumeAnalyzer?</h2>
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-icon">🎯</div>
@@ -190,7 +206,7 @@
 
   <footer class="footer">
     <div class="container footer-content">
-      <p>&copy; 2025 ResumeMatch AI. Powered by Flask & Machine Learning.</p>
+      <p>&copy; 2025 ResumeAnalyzer. Powered by Flask & Machine Learning.</p>
     </div>
   </footer>
 

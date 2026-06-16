@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Comprehensive test script for ResumeMatch AI
+Comprehensive test script for ResumeAnalyzer
 Run this to verify everything is working correctly
 """
 
@@ -182,7 +182,7 @@ def check_endpoints():
 def main():
     """Run all tests"""
     print("\n" + "=" * 60)
-    print("RESUMEMATCH AI - PROJECT VERIFICATION")
+    print("RESUMEANALYZER - PROJECT VERIFICATION")
     print("=" * 60)
     print(f"Python: {sys.version}")
     print(f"Working Directory: {os.getcwd()}")
