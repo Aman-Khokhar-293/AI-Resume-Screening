@@ -10,9 +10,14 @@ def get_nlp():
     try:
         return spacy.load(SPACY_MODEL)
     except OSError:
-        raise RuntimeError(
-            f"spaCy model '{SPACY_MODEL}' not found. Run: python scripts/setup_nlp.py"
-        )
+        try:
+            import spacy.cli
+            spacy.cli.download(SPACY_MODEL)
+            return spacy.load(SPACY_MODEL)
+        except Exception as e:
+            raise RuntimeError(
+                f"spaCy model '{SPACY_MODEL}' not found and automatic download failed: {str(e)}"
+            )
 
 
 @lru_cache(maxsize=1)
@@ -20,4 +25,9 @@ def get_stopwords():
     try:
         return set(nltk.corpus.stopwords.words("english"))
     except LookupError:
-        raise RuntimeError("NLTK stopwords not found. Run: python scripts/setup_nlp.py")
+        try:
+            nltk.download("stopwords")
+            nltk.download("punkt")
+            return set(nltk.corpus.stopwords.words("english"))
+        except Exception as e:
+            raise RuntimeError(f"NLTK stopwords not found and automatic download failed: {str(e)}")
