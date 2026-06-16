@@ -1,5 +1,6 @@
 import os
 import spacy
+import spacy.cli
 import nltk
 from functools import lru_cache
 from config import SPACY_MODEL
@@ -11,8 +12,7 @@ def get_nlp():
         return spacy.load(SPACY_MODEL)
     except OSError:
         try:
-            from spacy.cli import download
-            download(SPACY_MODEL)
+            spacy.cli.download(SPACY_MODEL)
             return spacy.load(SPACY_MODEL)
         except Exception as e:
             raise RuntimeError(
